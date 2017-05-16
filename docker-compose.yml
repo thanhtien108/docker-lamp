@@ -25,6 +25,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "52022:22"
     volumes_from:
       - storage
 
@@ -51,7 +52,7 @@ services:
       - db:/var/lib/mysql
       - logs:/var/log/httpd
       - ./services/mysql:/docker-entrypoint-initdb.d
-      - ./source:/var/htdocs
+      - ./source:/usr/local/apache2/htdocs
 
 volumes:
   db: {}

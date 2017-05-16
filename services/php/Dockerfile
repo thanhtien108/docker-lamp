@@ -18,4 +18,4 @@ RUN \
 #RUN chmod 755 /usr/local/bin/composer
 
 # EXPOSE 9000
-CMD ["php-fpm", "--allow-to-run-as-root"]
+#CMD ["php-fpm", "--allow-to-run-as-root"]

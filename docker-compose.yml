@@ -17,8 +17,8 @@ services:
   httpd:
     image: thanhtien/httpd:2.4.25
     build: 
-    context: ./services/httpd
-    dockerfile: Dockerfile
+      context: ./services/httpd
+      dockerfile: Dockerfile
 
     networks:
       - mynetwork
@@ -51,7 +51,6 @@ services:
       - db:/var/lib/mysql
       - logs:/var/log/httpd
       - ./services/mysql:/docker-entrypoint-initdb.d
-      - ./services/httpd/httpd.conf:/etc/httpd/conf/httpd.conf
       - ./source:/var/htdocs
 
 volumes:

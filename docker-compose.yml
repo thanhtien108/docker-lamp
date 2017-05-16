@@ -1,0 +1,63 @@
+version: "2"
+
+services:
+  mysql:
+    image: mysql:5.6.36
+    environment:
+      - MYSQL_ROOT_PASSWORD=lampart
+      - MYSQL_USER=thanhtien
+      - MYSQL_PASSWORD=lampart
+    networks:
+      - mynetwork
+    ports:
+      - "3306:3306"
+    volumes_from:
+      - storage
+
+  httpd:
+    image: thanhtien/httpd:2.4.25
+    build: 
+    context: ./services/httpd
+    dockerfile: Dockerfile
+
+    networks:
+      - mynetwork
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes_from:
+      - storage
+
+  php5:
+    image: thanhtien/php:5.6.30-cli
+    build:
+      context: ./services/php
+      dockerfile: Dockerfile
+    networks:
+      - mynetwork
+    volumes_from:
+      - storage
+
+  storage:
+    image: leighmcculloch/unison:latest
+    environment:
+      - UNISON_WORKING_DIR=/unison
+    networks:
+      - mynetwork
+    ports:
+      - "5000:5000"
+    restart: always
+    volumes:
+      - db:/var/lib/mysql
+      - logs:/var/log/httpd
+      - ./services/mysql:/docker-entrypoint-initdb.d
+      - ./services/httpd/httpd.conf:/etc/httpd/conf/httpd.conf
+      - ./source:/var/htdocs
+
+volumes:
+  db: {}
+  logs: {}
+
+networks:
+  mynetwork:
+    driver: bridge

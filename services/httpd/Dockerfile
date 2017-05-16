@@ -1,0 +1,11 @@
+FROM httpd:2.4.25
+
+# Remove default nginx configs
+#RUN rm -f /etc/nginx/conf.d/*
+#RUN rm -f /etc/nginx/nginx.conf
+
+# Add configuration files
+#COPY nginx.conf /etc/nginx/
+#COPY 00-alpine.conf /etc/sysctl.d/
+
+EXPOSE 80 443
